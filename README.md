@@ -89,3 +89,7 @@ uv run pytest
 ```
 
 Tests run the server in memory against a mocked Lexware API, so no API key is needed.
+
+## License
+
+MIT, see [LICENSE](LICENSE).
