@@ -45,14 +45,21 @@ and gets back the invoice number, totals and a link to open the draft in Lexware
 ## Setup
 
 1. Create an API key at <https://app.lexware.de/addons/public-api>.
-2. Install dependencies: `uv sync`
+2. Clone this repository. No install step is needed: `uv run --with` resolves the dependencies
+   (`fastmcp`, `httpx`) on the fly when the server starts.
+
+Run the server manually to check it starts:
+
+```bash
+LEXWARE_API_KEY=your-api-key uv run --with "fastmcp>=4" --with httpx /absolute/path/to/lexoffice_mcp/main.py
+```
 
 ## Install into Claude Code
 
 ```bash
 claude mcp add lexware --scope user \
   -e LEXWARE_API_KEY=your-api-key \
-  -- uv run --directory /absolute/path/to/lexoffice_mcp main.py
+  -- uv run --with "fastmcp>=4" --with httpx /absolute/path/to/lexoffice_mcp/main.py
 ```
 
 Check the connection with `claude mcp list` or `/mcp` inside Claude Code. The key is stored in plain text in
@@ -67,7 +74,7 @@ Add to `claude_desktop_config.json`:
   "mcpServers": {
     "lexware": {
       "command": "uv",
-      "args": ["run", "--directory", "/absolute/path/to/lexoffice_mcp", "main.py"],
+      "args": ["run", "--with", "fastmcp>=4", "--with", "httpx", "/absolute/path/to/lexoffice_mcp/main.py"],
       "env": { "LEXWARE_API_KEY": "your-api-key" }
     }
   }
@@ -85,6 +92,7 @@ Add to `claude_desktop_config.json`:
 ## Development
 
 ```bash
+uv sync
 uv run pytest
 ```
 

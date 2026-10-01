@@ -14,7 +14,7 @@ Uses `uv`, Python 3.13.
 uv sync                                   # install deps
 uv run pytest                             # all tests (no API key needed)
 uv run pytest tests/test_server.py::test_create_invoice_retries_on_rate_limit   # single test
-LEXWARE_API_KEY=... uv run main.py        # run server over stdio
+LEXWARE_API_KEY=... uv run --with "fastmcp>=4" --with httpx main.py   # run server over stdio
 ```
 
 No linter or formatter is configured.
@@ -43,5 +43,5 @@ Flat layout (no package, no `__init__.py`); pytest finds modules via `pythonpath
 Env vars: `LEXWARE_API_KEY` (required; server fails at startup without it), `LEXWARE_BASE_URL` (default `https://api.lexware.io`), `LEXWARE_APP_URL` (default `https://app.lexware.de`, used for invoice deep links). Install into Claude Code with:
 
 ```bash
-claude mcp add lexware --scope user -e LEXWARE_API_KEY=... -- uv run --directory /absolute/path/to/lexoffice_mcp main.py
+claude mcp add lexware --scope user -e LEXWARE_API_KEY=... -- uv run --with "fastmcp>=4" --with httpx /absolute/path/to/lexoffice_mcp/main.py
 ```
